@@ -52,9 +52,14 @@ namespace B10956029_0328
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-            try 
+            try
             {
+                Th = new Thread(Listen);//建立監聽執行續，目標副程序-->Listen
+                Th.Start();//啟動監聽執行續
                 Th.Abort();//關閉監聽執行續
+
+                int Port = int.Parse(textBox_listenPort.Text);
+                U = new UdpClient(Port);
                 U.Close();//關閉監聽器
             }
             catch
@@ -72,5 +77,7 @@ namespace B10956029_0328
             S.Send(B, B.Length, IP, Port);//發送資料到指定位址
             S.Close();//關閉UDP Client
         }
+
+
     }
 }
